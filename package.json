@@ -17,6 +17,7 @@
     "url": "git://github.com/ben-eb/gulp-uncss.git"
   },
   "keywords": [
+    "unused",
     "css",
     "gulpplugin"
   ],
