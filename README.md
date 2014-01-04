@@ -29,13 +29,13 @@ gulp.task('default', function() {
 
 ## Options
 
-This plugin takes slightly different options to the `uncss` module, because it is essentially just a streaming wrapper which returns a CSS stream. Note that the lack of support for the `compress` option is intentional, use [gulp-csso](https://github.com/ben-eb/gulp-csso) instead.
+This plugin takes slightly different options to the `uncss` module, because it is essentially just a streaming wrapper which returns a CSS stream.
 
 ### html
 Type: `Array|String`
 *Required value.*
 
-An array of HTML files relative to the Gulpfile OR a raw string of HTML. 
+An array of HTML files relative to the Gulpfile OR a raw string of HTML.
 
 ### ignore
 Type: `Array`

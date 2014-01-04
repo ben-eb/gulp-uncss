@@ -22,7 +22,7 @@
     "gulpplugin"
   ],
   "dependencies": {
-    "uncss": "~0.6.1",
+    "uncss": "~0.6.2",
     "map-stream": "0.0.4"
   },
   "devDependencies": {
