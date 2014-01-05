@@ -22,7 +22,7 @@ describe('gulp-uncss', function() {
             cb();
         });
         stream.write(new gutil.File({
-            contents: css
+            contents: new Buffer(css)
         }));
     });
 });
