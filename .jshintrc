@@ -1,6 +1,5 @@
 {
     "expr": true,
-    "browser": true,
     "strict": true,
     "trailing": true,
     "undef": true,

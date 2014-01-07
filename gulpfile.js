@@ -20,7 +20,7 @@ gulp.task('default', function() {
     gulp.run('lint');
     gulp.watch('*.js', function(event) {
         clear();
-        gutil.log(gutil.colors.cyan(event.path.replace(process.cwd(), '')) + ' ' + event.type + '.');
+        gutil.log(gutil.colors.cyan(event.path.replace(process.cwd(), '')) + ' ' + event.type + '. (' + gutil.colors.magenta(gutil.date('HH:MM:ss')) + ')');
         gulp.run('lint');
     });
 });
