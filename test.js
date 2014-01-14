@@ -9,7 +9,7 @@ var uncss = require('./index');
 
 var html = '<html><body><h1>hello</h1></body></html>';
 var css = 'h2 { color:blue; } h1 { color:red }';
-var output = 'h1 {\n  color: red;\n}';
+var output = 'h1 {\n  color: red;\n}\n';
 
 describe('gulp-uncss', function() {
     this.timeout(10000);
