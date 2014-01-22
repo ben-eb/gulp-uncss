@@ -10,7 +10,10 @@ module.exports = function() {
     var ignore = arguments[0].ignore;
     var timeout = arguments[0].timeout;
     return map(function(file, cb) {
-        uncss(html, { raw: String(file.contents), ignore: ignore, timeout: timeout }, function(output) {
+        uncss(html, { raw: String(file.contents), ignore: ignore, timeout: timeout }, function(err, output) {
+            if (err) {
+                cb('gulp-uncss: ' + err);
+            }
             file.contents = new Buffer(output);
             cb(null, file);
         });
