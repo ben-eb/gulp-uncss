@@ -2,20 +2,58 @@
 
 'use strict';
 
-var map = require('map-stream');
-var uncss = require('uncss');
+var uncss           = require('uncss'),
+    gutil           = require('gulp-util'),
+    transform       = require('stream').Transform,
+    bufferstreams   = require('bufferstreams'),
 
-module.exports = function() {
-    var html = arguments[0].html;
-    var ignore = arguments[0].ignore;
-    var timeout = arguments[0].timeout;
-    return map(function(file, cb) {
-        uncss(html, { raw: String(file.contents), ignore: ignore, timeout: timeout }, function(err, output) {
+    PLUGIN_NAME     = 'gulp-uncss';
+
+function uncssTransform(options) {
+    // Returns a callback that handles the buffered content
+    return function(err, buffer, cb) {
+        if (err) {
+            cb(gutil.PluginError(PLUGIN_NAME, err));
+        }
+        uncss(options.html, { raw: String(buffer), ignore: options.ignore, timeout: options.timeout }, function(err, output) {
             if (err) {
-                cb('gulp-uncss: ' + err);
+                cb(gutil.PluginError(PLUGIN_NAME, err));
             }
-            file.contents = new Buffer(output);
-            cb(null, file);
+            cb(null, new Buffer(output));
         });
-    });
-};
+    };
+}
+
+function gulpuncss(optimise) {
+    var stream = new transform({ objectMode: true });
+    var options = {
+        html: arguments[0].html,
+        ignore: arguments[0].ignore,
+        timeout: arguments[0].timeout
+    };
+    stream._transform = function(file, unused, done) {
+        // Pass through if null
+        if (file.isNull()) {
+            stream.push(file);
+            done();
+            return;
+        }
+
+        if (file.isStream()) {
+            file.contents = file.contents.pipe(new bufferstreams(uncssTransform(options)));
+            stream.push(file);
+            done();
+        } else {
+            uncss(options.html, { raw: String(file.contents), ignore: options.ignore, timeout: options.timeout }, function(err, output) {
+                file.contents = new Buffer(output);
+                stream.push(file);
+                done();
+            });
+        }
+    };
+
+    return stream;
+}
+
+gulpuncss.uncssTransform = uncssTransform;
+module.exports = gulpuncss;

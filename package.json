@@ -23,7 +23,8 @@
   ],
   "dependencies": {
     "uncss": "~0.7.4",
-    "map-stream": "~0.1.0"
+    "bufferstreams": "0.0.1",
+    "gulp-util": "~2.2.13"
   },
   "devDependencies": {
     "chai": "~1.8.1",
@@ -33,7 +34,8 @@
     "gulp-jshint": "~1.3.4",
     "gulp-util": "~2.2.10",
     "jshint-stylish": "~0.1.5",
-    "mocha": "~1.17.0"
+    "mocha": "~1.17.0",
+    "event-stream": "~3.1.0"
   },
   "main": "index.js"
 }
