@@ -12,7 +12,7 @@ npm install gulp-uncss --save-dev
 
 ## Example
 
-```
+```js
 var gulp = require('gulp');
 var uncss = require('gulp-uncss');
 
