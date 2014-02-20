@@ -13,11 +13,11 @@ function uncssTransform(options) {
     // Returns a callback that handles the buffered content
     return function(err, buffer, cb) {
         if (err) {
-            cb(gutil.PluginError(PLUGIN_NAME, err));
+            cb(new gutil.PluginError(PLUGIN_NAME, err));
         }
         uncss(options.html, { raw: String(buffer), ignore: options.ignore, timeout: options.timeout }, function(err, output) {
             if (err) {
-                cb(gutil.PluginError(PLUGIN_NAME, err));
+                cb(new gutil.PluginError(PLUGIN_NAME, err));
             }
             cb(null, new Buffer(output));
         });
@@ -45,6 +45,9 @@ function gulpuncss(optimise) {
             done();
         } else {
             uncss(options.html, { raw: String(file.contents), ignore: options.ignore, timeout: options.timeout }, function(err, output) {
+                if (err) {
+                    stream.emit('error', new gutil.PluginError(PLUGIN_NAME, err));
+                }
                 file.contents = new Buffer(output);
                 stream.push(file);
                 done();
