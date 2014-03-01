@@ -44,7 +44,7 @@ function gulpuncss(optimise) {
             stream.push(file);
             done();
         } else {
-            uncss(options.html, { raw: String(file.contents), ignore: options.ignore, timeout: options.timeout }, function(err, output) {
+            uncss(options.html, { raw: String(file.contents), ignore: options.ignore, timeout: options.timeout, ignoreSheets: [/\s*/] }, function(err, output) {
                 if (err) {
                     stream.emit('error', new gutil.PluginError(PLUGIN_NAME, err));
                 }
