@@ -6,8 +6,7 @@ var gulp    = require('gulp'),
     gutil   = require('gulp-util'),
     clear   = require('clear'),
     mocha   = require('gulp-mocha'),
-    jshint  = require('gulp-jshint'),
-    stylish = require('jshint-stylish');
+    jshint  = require('gulp-jshint');
 
 gulp.task('lint', function () {
     gulp.src('*.js')

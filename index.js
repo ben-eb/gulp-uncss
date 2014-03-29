@@ -24,7 +24,7 @@ function uncssTransform(options) {
     };
 }
 
-function gulpuncss(optimise) {
+function gulpuncss() {
     var stream = new transform({ objectMode: true });
     var options = {
         html: arguments[0].html,

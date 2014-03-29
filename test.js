@@ -67,5 +67,5 @@ describe('gulp-uncss', function() {
             contents: null
         }));
         stream.end();
-  });
+    });
 });
