@@ -1,4 +1,4 @@
-# [gulp](https://github.com/wearefractal/gulp)-uncss [![Build Status](https://travis-ci.org/ben-eb/gulp-uncss.png?branch=master)](https://travis-ci.org/ben-eb/gulp-uncss) [![NPM version](https://badge.fury.io/js/gulp-uncss.png)](http://badge.fury.io/js/gulp-uncss) [![Dependency Status](https://gemnasium.com/ben-eb/gulp-uncss.png)](https://gemnasium.com/ben-eb/gulp-uncss)
+# [gulp](https://github.com/wearefractal/gulp)-uncss [![Build Status](https://travis-ci.org/ben-eb/gulp-uncss.svg?branch=master)](https://travis-ci.org/ben-eb/gulp-uncss) [![NPM version](https://badge.fury.io/js/gulp-uncss.png)](http://badge.fury.io/js/gulp-uncss) [![Dependency Status](https://gemnasium.com/ben-eb/gulp-uncss.png)](https://gemnasium.com/ben-eb/gulp-uncss)
 
 > Remove unused CSS with [UnCSS](https://github.com/giakki/uncss).
 
