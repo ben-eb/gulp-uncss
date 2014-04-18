@@ -6,6 +6,7 @@ var uncss           = require('uncss'),
     gutil           = require('gulp-util'),
     transform       = require('stream').Transform,
     bufferstreams   = require('bufferstreams'),
+    objectAssign    = require('object-assign'),
 
     PLUGIN_NAME     = 'gulp-uncss';
 
@@ -15,7 +16,7 @@ function uncssTransform(options) {
         if (err) {
             cb(new gutil.PluginError(PLUGIN_NAME, err));
         }
-        uncss(options.html, { raw: String(buffer), ignore: options.ignore, timeout: options.timeout }, function(err, output) {
+        uncss(options.html, objectAssign(options, { raw: String(buffer) }), function(err, output) {
             if (err) {
                 cb(new gutil.PluginError(PLUGIN_NAME, err));
             }
@@ -29,7 +30,8 @@ function gulpuncss() {
     var options = {
         html: arguments[0].html,
         ignore: arguments[0].ignore,
-        timeout: arguments[0].timeout
+        timeout: arguments[0].timeout,
+        ignoreSheets: [/\s*/]
     };
     stream._transform = function(file, unused, done) {
         // Pass through if null
@@ -44,7 +46,7 @@ function gulpuncss() {
             stream.push(file);
             done();
         } else {
-            uncss(options.html, { raw: String(file.contents), ignore: options.ignore, timeout: options.timeout, ignoreSheets: [/\s*/] }, function(err, output) {
+            uncss(options.html, objectAssign(options, { raw: String(file.contents) }), function(err, output) {
                 if (err) {
                     stream.emit('error', new gutil.PluginError(PLUGIN_NAME, err));
                 }
