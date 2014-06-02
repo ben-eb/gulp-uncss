@@ -22,7 +22,7 @@
     "gulpplugin"
   ],
   "dependencies": {
-    "bufferstreams": "0.0.1",
+    "bufferstreams": "0.0.2",
     "gulp-util": "~2.2.14",
     "object-assign": "^0.3.0",
     "uncss": "~0.8.1"
