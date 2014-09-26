@@ -5,27 +5,11 @@
 var uncss           = require('uncss'),
     gutil           = require('gulp-util'),
     transform       = require('stream').Transform,
-    bufferstreams   = require('bufferstreams'),
     objectAssign    = require('object-assign'),
 
     PLUGIN_NAME     = 'gulp-uncss';
 
-function uncssTransform(options) {
-    // Returns a callback that handles the buffered content
-    return function(err, buffer, cb) {
-        if (err) {
-            cb(new gutil.PluginError(PLUGIN_NAME, err));
-        }
-        uncss(options.html, objectAssign(options, { raw: String(buffer) }), function(err, output) {
-            if (err) {
-                cb(new gutil.PluginError(PLUGIN_NAME, err));
-            }
-            cb(null, new Buffer(output));
-        });
-    };
-}
-
-function gulpuncss() {
+module.exports = function() {
     var stream = new transform({ objectMode: true });
     var options = {
         html: arguments[0].html,
@@ -33,32 +17,23 @@ function gulpuncss() {
         timeout: arguments[0].timeout,
         ignoreSheets: [/\s*/]
     };
-    stream._transform = function(file, unused, done) {
-        // Pass through if null
-        if (file.isNull()) {
-            stream.push(file);
-            done();
-            return;
-        }
 
+    stream._transform = function(file, unused, done) {
         if (file.isStream()) {
-            file.contents = file.contents.pipe(new bufferstreams(uncssTransform(options)));
-            stream.push(file);
-            done();
-        } else {
+            return done(new gutil.PluginError(PLUGIN_NAME, 'Streaming not supported'));
+        } else if (file.isBuffer()) {
             uncss(options.html, objectAssign(options, { raw: String(file.contents) }), function(err, output) {
                 if (err) {
-                    stream.emit('error', new gutil.PluginError(PLUGIN_NAME, err));
+                    return done(new gutil.PluginError(PLUGIN_NAME, err));
                 }
                 file.contents = new Buffer(output);
-                stream.push(file);
-                done();
+                done(null, file);
             });
+        } else {
+            // Pass through when null
+            done(null, file);
         }
     };
 
     return stream;
 }
-
-gulpuncss.uncssTransform = uncssTransform;
-module.exports = gulpuncss;

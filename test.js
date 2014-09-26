@@ -27,7 +27,8 @@ describe('gulp-uncss', function() {
             contents: new Buffer(css)
         }));
     });
-    it('should work the same in stream mode', function(cb) {
+
+    it('in stream mode should throw an error', function(cb) {
         var stream = uncss({
             html: html
         });
@@ -36,17 +37,16 @@ describe('gulp-uncss', function() {
             contents: new Stream()
         });
 
-        stream.on('data', function(data) {
-            data.contents.pipe(es.wait(function(err, data) {
-                expect(data).to.equal(output);
-                cb();
-            }));
-        });
+        var doWrite = function() {
+            stream.write(fakeFile);
+            fakeFile.contents.write(css);
+            fakeFile.contents.end();
+        };
 
-        stream.write(fakeFile);
-        fakeFile.contents.write(css);
-        fakeFile.contents.end();
+        expect(doWrite).to.throw(/Streaming not supported/);
+        cb();
     });
+
     it('should let null files pass through', function(cb) {
         var n = 0,
             stream = uncss({
