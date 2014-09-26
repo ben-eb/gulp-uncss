@@ -25,6 +25,22 @@ gulp.task('default', function() {
 });
 ```
 
+## Glob example
+
+UnCSS does not provide native support for globbing patterns. If you would like gulp-uncss to parse a directory recursively, then you can use the [glob module](https://www.npmjs.org/package/glob) like so:
+
+```js
+var glob = require('glob');
+
+gulp.task('uncss', function() {
+    gulp.src('site.css')
+        .pipe(uncss({
+            html: glob.sync('templates/**/*.html')
+        }))
+        .pipe(gulp.dest('./out'));
+});
+```
+
 ## Options
 
 This plugin takes slightly different options to the `uncss` module, because it is essentially just a streaming wrapper which returns a CSS stream.
