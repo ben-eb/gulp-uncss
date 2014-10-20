@@ -41,7 +41,7 @@ gulp.task('glob', function() {
 });
 ```
 
-## URL Example
+## URL example
 
 UnCSS can also visit your website for the HTML it uses to analyse the CSS against. Here is an example:
 
@@ -61,7 +61,7 @@ Note that you can mix and match URLs and paths to files using the `html` option.
 
 ## Options
 
-This plugin takes slightly different options to the `uncss` module, because it is essentially just a streaming wrapper which returns a CSS stream.
+This plugin takes slightly different options to the UnCSS module, because it is essentially just a streaming wrapper which returns a CSS stream.
 
 ### html
 Type: `Array|String`
