@@ -16,7 +16,7 @@ npm install gulp-uncss --save-dev
 var gulp = require('gulp');
 var uncss = require('gulp-uncss');
 
-gulp.task('default', function() {
+gulp.task('simple', function() {
     return gulp.src('site.css')
         .pipe(uncss({
             html: ['index.html', 'about.html']
@@ -32,7 +32,7 @@ UnCSS does not provide native support for globbing patterns. If you would like g
 ```js
 var glob = require('glob');
 
-gulp.task('uncss', function() {
+gulp.task('glob', function() {
     gulp.src('site.css')
         .pipe(uncss({
             html: glob.sync('templates/**/*.html')
@@ -40,6 +40,22 @@ gulp.task('uncss', function() {
         .pipe(gulp.dest('./out'));
 });
 ```
+
+## URL Example
+
+UnCSS can also visit your website for the HTML it uses to analyse the CSS against. Here is an example:
+
+gulp.task('urls', function() {
+    gulp.src('site.css')
+        .pipe(uncss({
+            html: [
+                'http://www.example.com'
+            ]
+        }))
+        .pipe(gulp.dest('./out'));
+});
+
+Note that you can mix and match URLs and paths to files using the `html` option.
 
 ## Options
 
@@ -49,7 +65,7 @@ This plugin takes slightly different options to the `uncss` module, because it i
 Type: `Array|String`
 *Required value.*
 
-An array of HTML files relative to the Gulpfile OR a raw string of HTML.
+An array which can contain an array of files relative to your `gulpfile.js`, and which can also contain URLs. Note that if you are to pass URLs here, then the task will take much longer to complete. If you want to pass some HTML directly into the task instead, you can specify it here as a string.
 
 ### ignore
 Type: `Array`
