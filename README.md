@@ -45,6 +45,7 @@ gulp.task('glob', function() {
 
 UnCSS can also visit your website for the HTML it uses to analyse the CSS against. Here is an example:
 
+```js
 gulp.task('urls', function() {
     gulp.src('site.css')
         .pipe(uncss({
@@ -54,6 +55,7 @@ gulp.task('urls', function() {
         }))
         .pipe(gulp.dest('./out'));
 });
+```
 
 Note that you can mix and match URLs and paths to files using the `html` option.
 
