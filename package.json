@@ -24,7 +24,7 @@
   "dependencies": {
     "gulp-util": "~3.0.1",
     "object-assign": "^1.0.0",
-    "uncss": "0.8.1"
+    "uncss": "0.9.1"
   },
   "devDependencies": {
     "chai": "~1.9.1",
