@@ -2,27 +2,24 @@
 
 'use strict';
 
-var uncss           = require('uncss'),
-    gutil           = require('gulp-util'),
-    transform       = require('stream').Transform,
-    objectAssign    = require('object-assign'),
+var uncss       = require('uncss'),
+    gutil       = require('gulp-util'),
+    assign      = require('object-assign'),
+    transform   = require('stream').Transform,
 
-    PLUGIN_NAME     = 'gulp-uncss';
+    PLUGIN_NAME = 'gulp-uncss';
 
-module.exports = function() {
+module.exports = function(options) {
     var stream = new transform({ objectMode: true });
-    var options = {
-        html: arguments[0].html,
-        ignore: arguments[0].ignore,
-        timeout: arguments[0].timeout,
-        ignoreSheets: [/\s*/]
-    };
+
+    // Ignore stylesheets in the HTML files; only use those from the stream
+    options.ignoreSheets = [/\s*/];
 
     stream._transform = function(file, unused, done) {
         if (file.isStream()) {
             return done(new gutil.PluginError(PLUGIN_NAME, 'Streaming not supported'));
         } else if (file.isBuffer()) {
-            uncss(options.html, objectAssign(options, { raw: String(file.contents) }), function(err, output) {
+            uncss(options.html, assign(options, { raw: String(file.contents) }), function(err, output) {
                 if (err) {
                     return done(new gutil.PluginError(PLUGIN_NAME, err));
                 }
@@ -36,4 +33,4 @@ module.exports = function() {
     };
 
     return stream;
-}
+};
