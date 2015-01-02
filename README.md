@@ -12,56 +12,47 @@ npm install gulp-uncss --save-dev
 
 ## Example
 
+Single files, globbing patterns and URLs are all supported by gulp-uncss, and can be mixed and matched:
+
 ```js
 var gulp = require('gulp');
 var uncss = require('gulp-uncss');
 
-gulp.task('simple', function() {
+gulp.task('default', function() {
     return gulp.src('site.css')
         .pipe(uncss({
-            html: ['index.html', 'about.html']
+            html: ['index.html', 'posts/**/*.html', 'http://example.com']
         }))
         .pipe(gulp.dest('./out'));
 });
 ```
 
-## Glob example
-
-UnCSS does not provide native support for globbing patterns. If you would like gulp-uncss to parse a directory recursively, then you can use the [glob module](https://www.npmjs.org/package/glob) like so:
+gulp-uncss can also be used in a pipeline that involves CSS pre-processing. Utilising many transforms on a single file is one of gulp's strengths:
 
 ```js
-var glob = require('glob');
+var gulp = require('gulp');
+var uncss = require('gulp-uncss');
+var sass = require('gulp-sass');
+var concat = require('gulp-concat');
+var csso = require('gulp-csso');
 
-gulp.task('glob', function() {
-    gulp.src('site.css')
+gulp.task('default', function() {
+    return gulp.src('styles/**/*.scss')
+        .pipe(sass())
+        .pipe(concat('main.css'))
         .pipe(uncss({
-            html: glob.sync('templates/**/*.html')
+            html: ['index.html', 'posts/**/*.html', 'http://example.com']
         }))
+        .pipe(csso())
         .pipe(gulp.dest('./out'));
 });
 ```
 
-## URL example
-
-UnCSS can also visit your website for the HTML it uses to analyse the CSS against. Here is an example:
-
-```js
-gulp.task('urls', function() {
-    gulp.src('site.css')
-        .pipe(uncss({
-            html: [
-                'http://www.example.com'
-            ]
-        }))
-        .pipe(gulp.dest('./out'));
-});
-```
-
-Note that you can mix and match URLs and paths to files using the `html` option.
+In just a few lines, we compiled SCSS source into a single file, removed unused CSS and minified the output!
 
 ## Options
 
-This plugin takes slightly different options to the UnCSS module, because it is essentially just a streaming wrapper which returns a CSS stream.
+Please see the [UnCSS documentation](https://github.com/giakki/uncss#within-nodejs) for all of the options you can use. Some of them aren't as necessary when using gulp-uncss, because the CSS to analyse comes from the stream rather than the HTML files. The main options you will likely be using are:
 
 ### html
 Type: `Array|String`
@@ -80,6 +71,8 @@ Type: `Integer`
 Default value: `undefined`
 
 Specify how long to wait for the JS to be loaded.
+
+Note that `options.ignoreSheets` is *already defined* for you. gulp-uncss will only process CSS files in the stream.
 
 ## Contributing
 
