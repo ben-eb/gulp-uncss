@@ -5,7 +5,7 @@
 
 var expect = require('chai').expect,
     gutil  = require('gulp-util'),
-    uncss  = require('./index'),
+    uncss  = require('./'),
     Stream = require('stream'),
     es     = require('event-stream'),
 
