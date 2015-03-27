@@ -1,5 +1,3 @@
-/* jshint node:true */
-
 'use strict';
 
 var uncss       = require('uncss'),
@@ -17,9 +15,11 @@ module.exports = function(options) {
 
     stream._transform = function(file, unused, done) {
         if (file.isStream()) {
-            return done(new gutil.PluginError(PLUGIN_NAME, 'Streaming not supported'));
+            var error = 'Streaming not supported';
+            return done(new gutil.PluginError(PLUGIN_NAME, error));
         } else if (file.isBuffer()) {
-            uncss(options.html, assign(options, { raw: String(file.contents) }), function(err, output) {
+            options = assign(options, { raw: String(file.contents) });
+            uncss(options.html, options, function(err, output) {
                 if (err) {
                     return done(new gutil.PluginError(PLUGIN_NAME, err));
                 }

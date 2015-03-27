@@ -1,4 +1,3 @@
-/* jshint node: true */
 /* global describe, it */
 
 'use strict';
@@ -14,7 +13,6 @@ var expect = require('chai').expect,
     output = 'h1 {\n  color: red;\n}\n';
 
 describe('gulp-uncss', function() {
-    this.timeout(10000);
     it('should remove unused css selectors', function(cb) {
         var stream = uncss({
             html: html
