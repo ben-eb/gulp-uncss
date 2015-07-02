@@ -22,17 +22,17 @@
     "gulpplugin"
   ],
   "dependencies": {
-    "gulp-util": "~3.0.1",
-    "object-assign": "^2.0.0",
-    "uncss": "^0.12.0"
+    "gulp-util": "~3.0.6",
+    "object-assign": "^3.0.0",
+    "uncss": "^0.12.1"
   },
   "devDependencies": {
-    "chai": "~1.10.0",
-    "event-stream": "~3.2.1",
-    "gulp": "~3.8.10",
-    "gulp-jshint": "~1.9.0",
-    "jshint-stylish": "~1.0.0",
-    "mocha": "~2.1.0",
+    "chai": "~3.0.0",
+    "event-stream": "~3.3.1",
+    "gulp": "~3.9.0",
+    "gulp-jshint": "~1.11.2",
+    "jshint-stylish": "~2.0.1",
+    "mocha": "~2.2.5",
     "mocha-silent-reporter": "^1.0.0"
   },
   "main": "index.js"

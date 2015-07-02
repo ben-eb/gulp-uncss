@@ -5,7 +5,9 @@
 *If you have any difficulties with the output of this plugin, please use the
 [UnCSS tracker][bugs].*
 
-Install via [npm](https://npmjs.org/package/gulp-uncss):
+## Install
+
+With [npm](https://npmjs.org/package/gulp-uncss) do:
 
 ```
 npm install gulp-uncss --save-dev
@@ -94,7 +96,7 @@ to cover it.
 
 ## License
 
-MIT © Ben Briggs
+MIT © [Ben Briggs](http://beneb.info)
 
 [bugs]:    https://github.com/giakki/uncss/issues
 [ci]:      https://travis-ci.org/ben-eb/gulp-uncss
