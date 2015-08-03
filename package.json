@@ -1,6 +1,6 @@
 {
   "name": "gulp-uncss",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Remove unused CSS selectors.",
   "license": "MIT",
   "homepage": "https://github.com/ben-eb/gulp-uncss",
