@@ -1,69 +1,63 @@
-/* global describe, it */
-
 'use strict';
 
-var expect = require('chai').expect,
+var test   = require('tape'),
     gutil  = require('gulp-util'),
     uncss  = require('./'),
     Stream = require('stream'),
-    es     = require('event-stream'),
 
     html   = '<html><body><h1>hello</h1></body></html>',
     css    = 'h2 { color:blue; } h1 { color:red }',
     output = 'h1 {\n  color: red;\n}\n';
 
-describe('gulp-uncss', function() {
-    it('should remove unused css selectors', function(cb) {
-        var stream = uncss({
-            html: html
-        });
-        stream.on('data', function(data) {
-            expect(String(data.contents)).to.equal(output);
-            cb();
-        });
-        stream.write(new gutil.File({
-            contents: new Buffer(css)
-        }));
+function fixture (contents) {
+    return new gutil.File({
+        contents: contents,
+        cwd: __dirname,
+        base: __dirname,
+        path: __dirname + '/fixture.css'
+    });
+}
+
+test('should remove unused css selectors', function (t) {
+    t.plan(1);
+
+    var stream = uncss({html: html});
+
+    stream.on('data', function (data) {
+        t.equal(String(data.contents), output);
     });
 
-    it('in stream mode should throw an error', function(cb) {
-        var stream = uncss({
-            html: html
-        });
+    var file = fixture(new Buffer(css));
 
-        var fakeFile = new gutil.File({
-            contents: new Stream()
-        });
+    stream.write(file);
+});
 
-        var doWrite = function() {
-            stream.write(fakeFile);
-            fakeFile.contents.write(css);
-            fakeFile.contents.end();
-        };
+test('should throw an error in stream mode', function (t) {
+    t.plan(1);
 
-        expect(doWrite).to.throw(/Streaming not supported/);
-        cb();
+    var stream = uncss({html: html});
+
+    var file = fixture(new Stream());
+
+    var write = function () {
+        stream.write(file);
+        file.contents.write(css);
+        file.contents.end();
+    };
+
+    t.throws(write, 'should not support streaming contents');
+});
+
+test('should let null files pass through', function (t) {
+    t.plan(1);
+
+    var stream = uncss({html: html});
+
+    stream.on('data', function (data) {
+        t.equal(data.contents, null, 'should not transform null in any way');
     });
 
-    it('should let null files pass through', function(cb) {
-        var n = 0,
-            stream = uncss({
-                html: html
-            });
+    var file = fixture(null);
 
-        stream.pipe(es.through(function(file) {
-            expect(file.path).to.equal('null.md');
-            expect(file.contents).to.equal(null);
-            n++;
-        }, function() {
-            expect(n).to.equal(1);
-            cb();
-        }));
-
-        stream.write(new gutil.File({
-            path: 'null.md',
-            contents: null
-        }));
-        stream.end();
-    });
+    stream.write(file);
 });

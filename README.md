@@ -22,7 +22,7 @@ can be mixed and matched:
 var gulp = require('gulp');
 var uncss = require('gulp-uncss');
 
-gulp.task('default', function() {
+gulp.task('default', function () {
     return gulp.src('site.css')
         .pipe(uncss({
             html: ['index.html', 'posts/**/*.html', 'http://example.com']
@@ -39,16 +39,16 @@ var gulp = require('gulp');
 var uncss = require('gulp-uncss');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
-var csso = require('gulp-csso');
+var nano = require('gulp-cssnano');
 
-gulp.task('default', function() {
+gulp.task('default', function () {
     return gulp.src('styles/**/*.scss')
         .pipe(sass())
         .pipe(concat('main.css'))
         .pipe(uncss({
             html: ['index.html', 'posts/**/*.html', 'http://example.com']
         }))
-        .pipe(csso())
+        .pipe(nano())
         .pipe(gulp.dest('./out'));
 });
 ```

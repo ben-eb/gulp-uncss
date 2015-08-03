@@ -6,16 +6,13 @@
   "homepage": "https://github.com/ben-eb/gulp-uncss",
   "author": {
     "name": "Ben Briggs",
-    "email": "therealbenbriggs@hotmail.com",
+    "email": "beneb.info@gmail.com",
     "url": "http://beneb.info"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "tape test.js | tap-spec"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/ben-eb/gulp-uncss.git"
-  },
+  "repository": "ben-eb/gulp-uncss",
   "keywords": [
     "unused",
     "css",
@@ -27,13 +24,8 @@
     "uncss": "^0.12.1"
   },
   "devDependencies": {
-    "chai": "~3.0.0",
-    "event-stream": "~3.3.1",
-    "gulp": "~3.9.0",
-    "gulp-jshint": "~1.11.2",
-    "jshint-stylish": "~2.0.1",
-    "mocha": "~2.2.5",
-    "mocha-silent-reporter": "^1.0.0"
+    "tap-spec": "^4.0.2",
+    "tape": "^4.0.1"
   },
   "main": "index.js"
 }
