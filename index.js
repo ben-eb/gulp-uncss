@@ -18,7 +18,12 @@ module.exports = function (options) {
             var error = 'Streaming not supported';
             return cb(new gutil.PluginError(PLUGIN_NAME, error));
         } else if (file.isBuffer()) {
-            options = assign(options, {raw: String(file.contents)});
+            var contents = String(file.contents);
+            if (!contents.length) {
+                // Don't crash on empty files
+                return cb(null, file);
+            }
+            options = assign(options, {raw: contents});
             uncss(options.html, options, function (err, output) {
                 if (err) {
                     return cb(new gutil.PluginError(PLUGIN_NAME, err));

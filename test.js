@@ -18,6 +18,20 @@ function fixture (contents) {
     });
 }
 
+test('should not throw on an empty file', function (t) {
+    t.plan(1);
+
+    var stream = uncss({html: html});
+
+    stream.on('data', function (data) {
+        t.equal(String(data.contents), '');
+    });
+
+    var file = fixture(new Buffer(''));
+
+    stream.write(file);
+});
+
 test('should remove unused css selectors', function (t) {
     t.plan(1);
 
