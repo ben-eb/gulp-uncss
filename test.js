@@ -7,7 +7,7 @@ var test   = require('tape'),
 
     html   = '<html><body><h1>hello</h1></body></html>',
     css    = 'h2 { color:blue; } h1 { color:red }',
-    output = 'h1 {\n  color: red;\n}\n';
+    output = 'h1 { color:red }';
 
 function fixture (contents) {
     return new gutil.File({
