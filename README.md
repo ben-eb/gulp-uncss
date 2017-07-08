@@ -1,4 +1,32 @@
-# [gulp][gulp]-uncss [![Build Status](https://travis-ci.org/ben-eb/gulp-uncss.svg?branch=master)][ci] [![NPM version](https://badge.fury.io/js/gulp-uncss.svg)][npm] [![Dependency Status](https://gemnasium.com/ben-eb/gulp-uncss.svg)][deps]
+# Deprecation Notice
+
+Since UnCSS is now a PostCSS plugin which can be combined with other CSS
+processing steps, there is little incentive to add a separate pass to your
+build step. Instead of using gulp-uncss, you can replicate the functionality
+by the following gulp task:
+
+```js
+var gulp = require('gulp');
+var postcss = require('gulp-postcss');
+var uncss = require('postcss-uncss');
+
+gulp.task('default', function () {
+    var plugins = [
+        uncss({
+            html: ['index.html', 'posts/**/*.html', 'http://example.com']
+        }),
+    ];
+    return gulp.src('./src/*.css')
+        .pipe(postcss(plugins))
+        .pipe(gulp.dest('./dest'));
+});
+```
+
+Now you can add other plugins to complement UnCSS, such as [cssnano].
+
+[cssnano]: https://github.com/ben-eb/cssnano
+
+# [gulp][gulp]-uncss
 
 > Remove unused CSS with [UnCSS][orig].
 
@@ -99,9 +127,6 @@ to cover it.
 MIT © [Ben Briggs](http://beneb.info)
 
 [bugs]:    https://github.com/giakki/uncss/issues
-[ci]:      https://travis-ci.org/ben-eb/gulp-uncss
-[deps]:    https://gemnasium.com/ben-eb/gulp-uncss
 [docs]:    https://github.com/giakki/uncss#within-nodejs
 [gulp]:    https://github.com/gulpjs/gulp
-[npm]:     http://badge.fury.io/js/gulp-uncss
 [orig]:    https://github.com/giakki/uncss
